@@ -1,3 +1,6 @@
+# UPDATE 2.1.12b
+- 🐛 Updated to latest version of CreativeCore (2.13.x)
+
 # UPDATE 2.1.12a
 - 🐛 Fixed wrong watermedia version range
 - 🐛 Fixed wrong creativecore version range
