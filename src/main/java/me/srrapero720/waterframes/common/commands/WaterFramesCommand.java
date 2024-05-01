@@ -14,6 +14,11 @@ import me.srrapero720.waterframes.common.block.data.types.PositionHorizontal;
 import me.srrapero720.waterframes.common.block.data.types.PositionVertical;
 import me.srrapero720.waterframes.common.block.entity.DisplayTile;
 import org.watermedia.api.image.ImageAPI;
+import me.srrapero720.waterframes.common.commands.arguments.EnumArgument;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.fabricmc.fabric.api.client.command.v2.ClientCommandManager;
+import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
 import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
 import net.minecraft.commands.CommandSourceStack;
@@ -31,9 +36,6 @@ import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.server.command.EnumArgument;
 import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
 
@@ -190,21 +192,21 @@ public class WaterFramesCommand {
         );
 
         DEFAULT_INPUTS = new ItemInput[] {
-                new ItemInput(Holder.direct(DisplaysRegistry.REMOTE_ITEM.get()), null),
-                new ItemInput(Holder.direct(DisplaysRegistry.FRAME_ITEM.get()), null),
-                new ItemInput(Holder.direct(DisplaysRegistry.PROJECTOR_ITEM.get()), null),
-                new ItemInput(Holder.direct(DisplaysRegistry.TV_ITEM.get()), null),
-                new ItemInput(Holder.direct(DisplaysRegistry.BIG_TV_ITEM.get()), null),
-                new ItemInput(Holder.direct(DisplaysRegistry.TV_BOX_ITEM.get()), null),
+                new ItemInput(Holder.direct(DisplaysRegistry.REMOTE_ITEM), null),
+                new ItemInput(Holder.direct(DisplaysRegistry.FRAME_ITEM), null),
+                new ItemInput(Holder.direct(DisplaysRegistry.PROJECTOR_ITEM), null),
+                new ItemInput(Holder.direct(DisplaysRegistry.TV_ITEM), null),
+                new ItemInput(Holder.direct(DisplaysRegistry.BIG_TV_ITEM), null),
+                new ItemInput(Holder.direct(DisplaysRegistry.TV_BOX_ITEM), null),
         };
 
         dispatcher.register(waterframes);
     }
 
-    @OnlyIn(Dist.CLIENT)
-    public static void registerClient(CommandDispatcher<CommandSourceStack> dispatcher) {
-        var waterframes = Commands.literal("waterframes");
-        waterframes.then(Commands.literal("reload_all")
+    @Environment(EnvType.CLIENT)
+    public static void registerClient(CommandDispatcher<FabricClientCommandSource> dispatcher) {
+        var waterframes = ClientCommandManager.literal("waterframesclient");
+        waterframes.then(ClientCommandManager.literal("reload_all")
                 .executes(c -> watermedia$reloadAll(c.getSource()))
         );
         dispatcher.register(waterframes);
@@ -461,10 +463,10 @@ public class WaterFramesCommand {
         return 0;
     }
 
-    @OnlyIn(Dist.CLIENT)
-    public static int watermedia$reloadAll(CommandSourceStack source) {
+    @Environment(EnvType.CLIENT)
+    public static int watermedia$reloadAll(FabricClientCommandSource source) {
         ImageAPI.reloadCache();
-        source.sendSuccess(msgSuccess("waterframes.commands.reload_all.success"), true);
+        source.sendFeedback(msgSuccess("waterframes.commands.reload_all.success").get());
         return 0;
     }
 
