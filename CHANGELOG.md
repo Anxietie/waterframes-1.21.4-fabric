@@ -1,3 +1,8 @@
+# UPDATE 2.1.12a
+- 🐛 Fixed wrong watermedia version range
+- 🐛 Fixed wrong creativecore version range
+- 🐛 Removed unintended stellarity "break" dependency
+
 # UPDATE 2.1.12
 - 🛠️ Removed slavisim mode (not needed/working anymore)
 - 🛠️ Ensure synchronized duration when vlc updates it (somehow for a few seconds VLC reports no duration after playing specific streams)
