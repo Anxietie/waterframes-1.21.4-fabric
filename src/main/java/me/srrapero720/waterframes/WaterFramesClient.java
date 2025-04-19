@@ -14,6 +14,12 @@ import static me.srrapero720.waterframes.WaterFrames.LOADING_ANIMATION;
 public class WaterFramesClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
+        // CHECK FOR WATERMEDIA
+        if (!WaterFrames.isInstalled("watermedia")) {
+            WaterFrames.LOGGER.error("WATERFrAMES requires WaterMedia on client-side to run! Please install it.");
+            return;
+        }
+
         DisplaysRegistry.initClient();
         CreativeCoreClient.registerClientConfig(ID);
         DisplayTile.initClient();

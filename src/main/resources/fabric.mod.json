@@ -32,7 +32,6 @@
     "minecraft": "~$mcversion",
     "java": ">=17",
     "fabric-api": "*",
-    "creativecore": "$creativecorerange",
-    "watermedia": "$watermediarange"
+    "creativecore": "$creativecorerange"
   }
 }
