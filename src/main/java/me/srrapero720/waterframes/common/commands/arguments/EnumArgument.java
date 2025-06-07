@@ -51,7 +51,7 @@ public class EnumArgument<T extends Enum<T>> implements ArgumentType<T> {
     }
 
     public Collection<String> getExamples() {
-        return (Collection)Stream.of((Enum[])this.enumClass.getEnumConstants()).map(Enum::name).collect(Collectors.toList());
+        return Stream.of((Enum[])this.enumClass.getEnumConstants()).map(Enum::name).collect(Collectors.toList());
     }
 
     public static class Info<T extends Enum<T>> implements ArgumentTypeInfo<EnumArgument<T>, Info<T>.Template> {

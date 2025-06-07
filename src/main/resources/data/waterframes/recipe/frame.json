@@ -6,18 +6,10 @@
         "iSi"
     ],
     "key": {
-        "i": {
-            "item": "minecraft:iron_ingot"
-        },
-        "G": {
-            "item": "minecraft:glowstone"
-        },
-        "T": {
-            "item": "minecraft:tinted_glass"
-        },
-        "S": {
-            "item": "waterframes:remote"
-        }
+        "i": "minecraft:iron_ingot",
+        "G": "minecraft:glowstone",
+        "T": "minecraft:tinted_glass",
+        "S": "waterframes:remote"
     },
     "result": {
         "id": "waterframes:frame",

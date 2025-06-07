@@ -6,15 +6,9 @@
     "iRi"
   ],
   "key": {
-    "i": {
-      "item": "minecraft:iron_ingot"
-    },
-    "G": {
-      "item": "minecraft:tinted_glass"
-    },
-    "R": {
-      "item": "waterframes:remote"
-    }
+    "i": "minecraft:iron_ingot",
+    "G": "minecraft:tinted_glass",
+    "R": "waterframes:remote"
   },
   "result": {
     "id": "waterframes:tv",
