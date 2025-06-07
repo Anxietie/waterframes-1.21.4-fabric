@@ -5,11 +5,6 @@
     "block.waterframes.tv": "Television",
     "block.waterframes.big_tv": "Big Television",
     "block.waterframes.tv_box": "Box Television",
-    "item.waterframes.frame": "Frame",
-    "item.waterframes.projector": "Projector",
-    "item.waterframes.tv": "Television",
-    "item.waterframes.big_tv": "Big Television",
-    "item.waterframes.tv_box": "Box Television",
     "item.waterframes.remote": "Remote Control",
 
     "waterframes.common.true": "Enabled",
