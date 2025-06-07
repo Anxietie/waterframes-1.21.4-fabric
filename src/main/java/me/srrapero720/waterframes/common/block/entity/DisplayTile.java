@@ -171,7 +171,7 @@ public class DisplayTile extends BlockEntity {
     }
 
     private int getLightLevel$internal() {
-        return !this.data.hasUri() ? 0 : (int) (((float) this.data.brightness / 255f) * level.getMaxLightLevel());
+        return !this.data.hasUri() ? 0 : (int) (((float) this.data.brightness / 255f) * level.getLightEngine().skyEngine.getLightValue(this.getBlockPos()));
     }
 
     private int getAnalogOutput$internal() {

@@ -28,11 +28,11 @@
   ],
   "accessWidener": "${modid}.accesswidener",
   "depends": {
-    "fabricloader": ">=0.15",
+    "fabricloader": ">=0.16",
     "minecraft": "~$mcversion",
-    "java": ">=17",
+    "java": ">=21",
     "fabric-api": "*",
-    "creativecore": "$creativecorerange",
-    "watermedia": "$watermediarange"
+    "creativecore": ">=2.12.32",
+    "watermedia": ">=2.1.19"
   }
 }

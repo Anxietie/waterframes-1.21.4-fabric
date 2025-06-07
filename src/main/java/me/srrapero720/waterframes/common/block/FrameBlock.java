@@ -5,6 +5,7 @@ import me.srrapero720.waterframes.DisplaysRegistry;
 import me.srrapero720.waterframes.common.block.entity.FrameTile;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.*;
@@ -13,7 +14,7 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
@@ -28,7 +29,9 @@ public class FrameBlock extends DisplayBlock {
     public static final MapCodec<FrameBlock> CODEC = simpleCodec(FrameBlock::new);
 
     public FrameBlock() {}
-    public FrameBlock(BlockBehaviour.Properties p) {}
+    public FrameBlock(BlockBehaviour.Properties p) {
+        super(p);
+    }
 
     @Override
     protected MapCodec<? extends BaseEntityBlock> codec() {
@@ -36,7 +39,7 @@ public class FrameBlock extends DisplayBlock {
     }
 
     @Override
-    public DirectionProperty getFacing() {
+    public EnumProperty<Direction> getFacing() {
         return BlockStateProperties.FACING;
     }
 

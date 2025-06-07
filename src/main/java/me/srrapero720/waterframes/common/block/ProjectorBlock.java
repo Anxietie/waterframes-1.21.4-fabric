@@ -14,7 +14,7 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import team.creative.creativecore.common.util.math.base.Facing;
@@ -26,7 +26,9 @@ public class ProjectorBlock extends DisplayBlock {
     public static final MapCodec<ProjectorBlock> CODEC = simpleCodec(ProjectorBlock::new);
 
     public ProjectorBlock() {}
-    public ProjectorBlock(BlockBehaviour.Properties p) {}
+    public ProjectorBlock(BlockBehaviour.Properties p) {
+        super(p);
+    }
 
     @Override
     protected MapCodec<? extends BaseEntityBlock> codec() {
@@ -34,7 +36,7 @@ public class ProjectorBlock extends DisplayBlock {
     }
 
     @Override
-    public DirectionProperty getFacing() {
+    public EnumProperty<Direction> getFacing() {
         return BlockStateProperties.HORIZONTAL_FACING;
     }
 

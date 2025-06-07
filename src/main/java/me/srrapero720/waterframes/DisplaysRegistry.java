@@ -13,18 +13,25 @@ import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
+import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.core.Registry;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.client.renderer.texture.AbstractTexture;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 import static me.srrapero720.waterframes.common.network.DisplayNetwork.*;
@@ -39,21 +46,21 @@ public class DisplaysRegistry {
 
     /* BLOCKS */
     public static final DisplayBlock
-            FRAME = Registry.register(BuiltInRegistries.BLOCK, resloc("frame"), new FrameBlock()),
-            PROJECTOR = Registry.register(BuiltInRegistries.BLOCK, resloc("projector"), new ProjectorBlock()),
-            TV = Registry.register(BuiltInRegistries.BLOCK, resloc("tv"), new TvBlock()),
-            BIG_TV = Registry.register(BuiltInRegistries.BLOCK, resloc("big_tv"), new BigTvBlock()),
-            TV_BOX = Registry.register(BuiltInRegistries.BLOCK, resloc("tv_box"), new TVBoxBlock());
+            FRAME = registerBlock("frame", FrameBlock::new, BlockBehaviour.Properties.of()),
+            PROJECTOR = registerBlock("projector", ProjectorBlock::new, BlockBehaviour.Properties.of()),
+            TV = registerBlock("tv", TvBlock::new, BlockBehaviour.Properties.of()),
+            BIG_TV = registerBlock("big_tv", BigTvBlock::new, BlockBehaviour.Properties.of()),
+            TV_BOX = registerBlock("tv_box", TVBoxBlock::new, BlockBehaviour.Properties.of());
 //            GOLDEN_PROJECTOR = BLOCKS.register("golden_projector", ProjectorBlock::new);
 
     /* ITEMS */
     public static final Item
-            REMOTE_ITEM = Registry.register(BuiltInRegistries.ITEM, resloc("remote"), new RemoteControl(remoteProp())),
-            FRAME_ITEM = Registry.register(BuiltInRegistries.ITEM, resloc("frame"), new BlockItem(FRAME, prop())),
-            PROJECTOR_ITEM = Registry.register(BuiltInRegistries.ITEM, resloc("projector"), new BlockItem(PROJECTOR, prop())),
-            TV_ITEM = Registry.register(BuiltInRegistries.ITEM, resloc("tv"), new BlockItem(TV, prop())),
-            BIG_TV_ITEM = Registry.register(BuiltInRegistries.ITEM, resloc("big_tv"), new BlockItem(BIG_TV, prop())),
-            TV_BOX_ITEM = Registry.register(BuiltInRegistries.ITEM, resloc("tv_box"), new BlockItem(TV_BOX, prop()));
+            REMOTE_ITEM = registerItem("remote", RemoteControl::new, remoteProp()),
+            FRAME_ITEM = registerBlockItem("frame", FRAME, prop()),
+            PROJECTOR_ITEM = registerBlockItem("projector", PROJECTOR, prop()),
+            TV_ITEM = registerBlockItem("tv", TV, prop()),
+            BIG_TV_ITEM = registerBlockItem("big_tv", BIG_TV, prop()),
+            TV_BOX_ITEM = registerBlockItem("tv_box", TV_BOX, prop());
 //            GOLDEN_PROJECTOR_ITEM = ITEMS.register("golden_projector", () -> new BlockItem(GOLDEN_PROJECTOR.get(), prop().tab(null)));
 
     /* TILES */
@@ -89,12 +96,34 @@ public class DisplaysRegistry {
             PERM_REMOTE_BIND = "waterframes.remote.bind",
             PERM_WHITELIST_BYPASS = "waterframes.whitelist.bypass";
 
+    private static <T extends Block> T registerBlock(String name, Function<BlockBehaviour.Properties, T> factory, BlockBehaviour.Properties properties) {
+        ResourceKey<Block> key = makeKey(Registries.BLOCK, name);
+        T block = factory.apply(properties.setId(key));
+        return Registry.register(BuiltInRegistries.BLOCK, key, block);
+    }
+
+    private static <T extends Item> T registerItem(String name, Function<Item.Properties, T> factory, Item.Properties properties) {
+        ResourceKey<Item> key = makeKey(Registries.ITEM, name);
+        T item = factory.apply(properties.setId(key));
+        return Registry.register(BuiltInRegistries.ITEM, key, item);
+    }
+
+    private static BlockItem registerBlockItem(String name, Block block, Item.Properties properties) {
+        ResourceKey<Item> key = makeKey(Registries.ITEM, name);
+        BlockItem blockItem = new BlockItem(block, properties.setId(key));
+        return Registry.register(BuiltInRegistries.ITEM, key, blockItem);
+    }
+
     public static boolean getPermBoolean(Player player, String node) {
         return DisplaysConfig.isOwner(player) || player.hasPermissions(2);
     }
 
-    private static BlockEntityType<DisplayTile> tile(BlockEntityType.BlockEntitySupplier<DisplayTile> creator, Supplier<DisplayBlock> block) {
-        return BlockEntityType.Builder.of(creator, block.get()).build(null);
+    private static BlockEntityType<DisplayTile> tile(FabricBlockEntityTypeBuilder.Factory<DisplayTile> creator, Supplier<DisplayBlock> block) {
+        return FabricBlockEntityTypeBuilder.<DisplayTile>create(creator, block.get()).build();
+    }
+
+    private static <T> ResourceKey<T> makeKey(ResourceKey<? extends Registry<T>> reg, String name) {
+        return ResourceKey.create(reg, resloc(name));
     }
 
     private static Item.Properties remoteProp() {

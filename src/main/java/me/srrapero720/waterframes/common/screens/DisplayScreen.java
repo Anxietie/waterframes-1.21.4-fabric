@@ -14,7 +14,7 @@ import net.fabricmc.api.Environment;
 import net.minecraft.ChatFormatting;
 import org.lwjgl.glfw.GLFW;
 import team.creative.creativecore.common.gui.*;
-import team.creative.creativecore.common.gui.control.simple.*;
+import team.creative.creativecore.common.gui.controls.simple.*;
 import team.creative.creativecore.common.gui.flow.GuiFlow;
 import team.creative.creativecore.common.gui.parser.DoubleValueParser;
 import team.creative.creativecore.common.gui.parser.IntValueParser;
@@ -151,7 +151,7 @@ public class DisplayScreen extends GuiLayer {
 
         this.seekbar = new GuiSeekBar("seek", () -> tile.data.tick, () -> tile.data.tickMax, LongValueParser.TIME_DURATION_TICK) {
             @Override
-            public boolean mouseScrolled(double x, double y, double scrolled) {
+            public boolean mouseScrolled(Rect rect, double x, double y, double scrolled) {
                 if (scrolled > 0.0f) {
                     tile.fastFoward(true);
                 } else {

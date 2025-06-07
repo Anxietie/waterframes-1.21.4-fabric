@@ -37,7 +37,6 @@ sourceSets.main.resources { srcDir 'src/generated/resources' }
 repositories {
     maven { url 'https://maven.minecraftforge.net/' }
     maven { url 'https://repo.spongepowered.org/maven' }
-    maven { url 'https://jitpack.io' }
     maven { url 'https://maven.parchmentmc.org' }
     maven { url 'https://www.cursemaven.com'
         content {includeGroup 'curse.maven' }
@@ -55,7 +54,7 @@ dependencies {
     modImplementation "net.fabricmc.fabric-api:fabric-api:$fabricversion"
 
     //DEPENDENCIES
-    modImplementation "com.github.WaterMediaTeam:watermedia:$watermediaversion"
+    modImplementation "curse.maven:watermedia-869524:$watermediaversion"
     modImplementation "curse.maven:creativecore-257814:$creativecoreversion"
 }
 
