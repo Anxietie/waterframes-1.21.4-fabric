@@ -4,6 +4,10 @@
 [![](https://dcbadge.vercel.app/api/server/cuYAzzZ)](https://discord.gg/cuYAzzZ)
 [![Modrinth Version](https://img.shields.io/modrinth/v/waterframes?style=for-the-badge&logo=modrinth&label=MODRINTH&color=%231bd96a)](https://modrinth.com/mod/waterframes)<br>
 
+# DISCLAIMER
+This is a forked repository of [WATERFrAMES](https://github.com/SrRapero720/waterframes) by [J-RAP](https://github.com/SrRapero720) that adds support for mc1.21.4.
+All the original features of the mod's mc1.21.1 version are present in this version.
+
 # 🖼️ WATERFrAMES | DISPLAY YOUR MEDIA
 [WATERFrAMES](https://www.curseforge.com/minecraft/mc-mods/waterframes) is **the mod** to **play
 videos and show pictures** in your Minecraft worlds only using URLs powered by WATERMeDIA.
