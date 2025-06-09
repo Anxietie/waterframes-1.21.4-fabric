@@ -46,19 +46,9 @@ public abstract class DisplayBlock extends BaseEntityBlock implements BlockGuiCr
     public static final BooleanProperty VISIBLE = BooleanProperty.create("frame");
     public static final IntegerProperty LIGHT_LEVEL = BlockStateProperties.LEVEL;
     public static final EnumProperty<Direction> ATTACHED_FACE = EnumProperty.create("attached_face", Direction.class, Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST, Direction.UP, Direction.DOWN);
-    protected static final Properties PROPERTIES = BlockBehaviour.Properties.of()
-            .lightLevel(value -> value.getValue(LIGHT_LEVEL))
-            .strength(1f)
-            .sound(SoundType.METAL)
-            .noOcclusion()
-            .forceSolidOff()
-            .isSuffocating(Blocks::never)
-            .isViewBlocking(Blocks::never)
-            .pushReaction(PushReaction.DESTROY)
-            .requiresCorrectToolForDrops();
 
     protected DisplayBlock() {
-        super(PROPERTIES);
+        super(DisplaysRegistry.WATERFRAMES_PROPERTIES);
     }
 
     protected DisplayBlock(Properties properties) {
@@ -197,6 +187,18 @@ public abstract class DisplayBlock extends BaseEntityBlock implements BlockGuiCr
 
     @Override public FluidState getFluidState(BlockState state) {
         return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(true) : super.getFluidState(state);
+    }
+
+    /*
+    @Override
+    public int getLightEmission() {
+
+    }
+
+     */
+
+    public static int getLuminance(BlockState state) {
+        return state.getValue(LIGHT_LEVEL);
     }
 
     @Override public BlockState rotate(BlockState state, Rotation rotation) {

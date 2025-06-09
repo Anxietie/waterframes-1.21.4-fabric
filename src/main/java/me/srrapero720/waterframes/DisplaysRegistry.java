@@ -27,9 +27,11 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.material.PushReaction;
 
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -43,14 +45,28 @@ public class DisplaysRegistry {
             .persistent(CodecManager.REMOTE_CODEC)
             .networkSynchronized(CodecManager.REMOTE_STREAM_CODEC)
             .build());
+    public static final BlockBehaviour.Properties WATERFRAMES_PROPERTIES = BlockBehaviour.Properties.of()
+            .lightLevel(DisplayBlock::getLuminance)
+            .strength(1f)
+            .sound(SoundType.METAL)
+            .noOcclusion()
+            .forceSolidOff()
+            .isSuffocating(Blocks::never)
+            .isViewBlocking(Blocks::never)
+            .pushReaction(PushReaction.DESTROY)
+            .requiresCorrectToolForDrops();
+    public static final BlockBehaviour.Properties TV_BOX_PROPERTIES = BlockBehaviour.Properties.of()
+            .lightLevel(DisplayBlock::getLuminance)
+            .strength(1f)
+            .sound(SoundType.WOOD);
 
     /* BLOCKS */
     public static final DisplayBlock
-            FRAME = registerBlock("frame", FrameBlock::new, BlockBehaviour.Properties.of()),
-            PROJECTOR = registerBlock("projector", ProjectorBlock::new, BlockBehaviour.Properties.of()),
-            TV = registerBlock("tv", TvBlock::new, BlockBehaviour.Properties.of()),
-            BIG_TV = registerBlock("big_tv", BigTvBlock::new, BlockBehaviour.Properties.of()),
-            TV_BOX = registerBlock("tv_box", TVBoxBlock::new, BlockBehaviour.Properties.of());
+            FRAME = registerBlock("frame", FrameBlock::new, WATERFRAMES_PROPERTIES),
+            PROJECTOR = registerBlock("projector", ProjectorBlock::new, WATERFRAMES_PROPERTIES),
+            TV = registerBlock("tv", TvBlock::new, WATERFRAMES_PROPERTIES),
+            BIG_TV = registerBlock("big_tv", BigTvBlock::new, WATERFRAMES_PROPERTIES),
+            TV_BOX = registerBlock("tv_box", TVBoxBlock::new, TV_BOX_PROPERTIES);
 //            GOLDEN_PROJECTOR = BLOCKS.register("golden_projector", ProjectorBlock::new);
 
     /* ITEMS */

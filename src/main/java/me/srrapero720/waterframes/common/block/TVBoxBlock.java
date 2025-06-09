@@ -25,13 +25,9 @@ import team.creative.creativecore.common.util.math.box.AlignedBox;
 public class TVBoxBlock extends DisplayBlock {
     public static final MapCodec<TVBoxBlock> CODEC = simpleCodec(TVBoxBlock::new);
     private static final AlignedBox STATIC_BOX = new AlignedBox();
-    protected static final Properties TV_BOX_PROPERTIES = BlockBehaviour.Properties.of()
-            .lightLevel(value -> value.getValue(LIGHT_LEVEL))
-            .strength(1f)
-            .sound(SoundType.WOOD);
 
     public TVBoxBlock() {
-        super(TV_BOX_PROPERTIES);
+        super(DisplaysRegistry.TV_BOX_PROPERTIES);
     }
     public TVBoxBlock(BlockBehaviour.Properties p) {
         super(p);
